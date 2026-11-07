@@ -96,6 +96,43 @@
   animation: pulse-glow 2s ease-in-out infinite;
 }
 
+/* Couple interaction: floating hearts that rise and fade */
+@keyframes couple-heart-burst {
+  0% { transform: translateY(0) scale(0.5); opacity: 0; }
+  20% { opacity: 1; }
+  60% { transform: translateY(-28px) scale(1.1); opacity: 1; }
+  100% { transform: translateY(-52px) scale(0.7); opacity: 0; }
+}
+
+.animate-couple-heart-burst {
+  animation: couple-heart-burst 1.4s ease-out forwards;
+}
+
+/* Couple interaction: soft glow halo behind the pair */
+@keyframes couple-glow {
+  0% { opacity: 0; transform: scale(0.8); }
+  40% { opacity: 1; transform: scale(1); }
+  100% { opacity: 0.6; transform: scale(1.05); }
+}
+
+.animate-couple-glow {
+  animation: couple-glow 1.2s ease-out forwards;
+}
+
+/* Respect reduced motion preferences */
+@media (prefers-reduced-motion: reduce) {
+  .animate-float-heart,
+  .animate-character-idle,
+  .animate-character-walk,
+  .animate-celebrate,
+  .animate-pulse-glow,
+  .animate-couple-heart-burst,
+  .animate-couple-glow,
+  .animate-fade-in {
+    animation: none !important;
+  }
+}
+
 
 /* Retro CRT and Pixel Art scanline effects */
 .pixel-corners {

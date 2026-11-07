@@ -3,6 +3,7 @@ import { CharacterRole } from '../types';
 import { sound } from '../utils/audio';
 import { CHARACTERS } from '../utils/storage';
 import { CharacterSprite, SUNSET_BG_URL } from './CharacterSprite';
+import { CoupleInteraction } from './CoupleInteraction';
 
 interface Level5FinalQuestProps {
   playerRole: CharacterRole;
@@ -155,23 +156,15 @@ export const Level5FinalQuest: React.FC<Level5FinalQuestProps> = ({
             </p>
           </div>
 
-          {/* Billo and Pillu reactive Sprites */}
-          <div className="flex items-end justify-center gap-6 my-1">
-            <CharacterSprite
-              role="billo"
+          {/* Billo and Pillu — Interactive Couple with Vow Bubbles */}
+          <div className="my-1">
+            <CoupleInteraction
               size={64}
-              animation={unlockedVows.length === 3 ? 'celebrate' : 'idle'}
-              dialogueBubble={vowBubble.billo}
-              showHeart={unlockedVows.length > 0}
+              gap={40}
               showNameTag={true}
-            />
-            <CharacterSprite
-              role="pillu"
-              size={64}
-              animation={unlockedVows.length === 3 ? 'celebrate' : 'idle'}
-              dialogueBubble={vowBubble.pillu}
-              showHeart={unlockedVows.length > 0}
-              showNameTag={true}
+              showButtons={true}
+              billoBubble={vowBubble.billo}
+              pilluBubble={vowBubble.pillu}
             />
           </div>
 
@@ -265,13 +258,14 @@ export const Level5FinalQuest: React.FC<Level5FinalQuestProps> = ({
             </p>
           </div>
 
-          {/* Billo & Pillu with Active Dialogue Bubbles */}
-          <div className="my-auto flex items-end justify-center gap-6 pt-6">
-            <CharacterSprite
-              role="billo"
+          {/* Billo & Pillu — Interactive Couple with Final Dialogue */}
+          <div className="my-auto pt-6">
+            <CoupleInteraction
               size={86}
-              animation="celebrate"
-              dialogueBubble={
+              gap={48}
+              showNameTag={true}
+              showButtons={true}
+              billoBubble={
                 currentDialogue.speaker === 'both'
                   ? currentDialogue.bubble
                   : (currentDialogue.speaker === 'active' && playerRole === 'billo') ||
@@ -279,15 +273,7 @@ export const Level5FinalQuest: React.FC<Level5FinalQuestProps> = ({
                   ? currentDialogue.bubble
                   : null
               }
-              showHeart={true}
-              showNameTag={true}
-            />
-            <div className="text-3xl sm:text-4xl text-rose-500 animate-float-heart pb-2">❤️</div>
-            <CharacterSprite
-              role="pillu"
-              size={86}
-              animation="celebrate"
-              dialogueBubble={
+              pilluBubble={
                 currentDialogue.speaker === 'both'
                   ? currentDialogue.bubble
                   : (currentDialogue.speaker === 'active' && playerRole === 'pillu') ||
@@ -295,8 +281,6 @@ export const Level5FinalQuest: React.FC<Level5FinalQuestProps> = ({
                   ? currentDialogue.bubble
                   : null
               }
-              showHeart={true}
-              showNameTag={true}
             />
           </div>
 

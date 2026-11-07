@@ -1,7 +1,8 @@
 import React, { useState } from 'react';
 import { CharacterRole } from '../types';
 import { sound } from '../utils/audio';
-import { CharacterSprite, SUNSET_BG_URL } from './CharacterSprite';
+import { SUNSET_BG_URL } from './CharacterSprite';
+import { CoupleInteraction } from './CoupleInteraction';
 
 interface FinalRewardScreenProps {
   playerRole: CharacterRole;
@@ -143,27 +144,15 @@ export const FinalRewardScreen: React.FC<FinalRewardScreenProps> = ({
             </h2>
           </div>
 
-          {/* Billo & Pillu Together on the baseline */}
+          {/* Billo & Pillu Together — Interactive Couple */}
           <div className="my-1 flex items-end justify-center gap-4 sm:gap-6">
             <div className="h-[90px] sm:h-[110px] flex items-end justify-center">
-              <CharacterSprite
-                role="billo"
+              <CoupleInteraction
                 size={86}
-                animation="celebrate"
-                showHeart={true}
+                gap={48}
                 showNameTag={true}
-              />
-            </div>
-            <div className="text-3xl sm:text-4xl text-rose-500 animate-float-heart drop-shadow-[0_0_16px_rgba(255,0,80,0.8)] pb-4">
-              ❤️
-            </div>
-            <div className="h-[90px] sm:h-[110px] flex items-end justify-center">
-              <CharacterSprite
-                role="pillu"
-                size={86}
-                animation="celebrate"
-                showHeart={true}
-                showNameTag={true}
+                showButtons={true}
+                className="scale-90 sm:scale-100"
               />
             </div>
           </div>
