@@ -100,12 +100,13 @@ export const FinalRewardScreen: React.FC<FinalRewardScreenProps> = ({
                 Billo 💙 & 🖤 Pillu
               </div>
               <p className="font-retro text-xl sm:text-2xl text-gray-700 pt-1 leading-relaxed">
-                Have successfully completed <strong>365 Days</strong> of warm hugs,
-                weathered every silly argument, collected {totalHearts} Glowing Hearts,
-                and unlocked the permanent title:
+                Have successfully remembered their story across <strong>365 Days</strong> —
+                from the flower by the sea to the last seat of the bus, from the forest picnic to
+                Bangkok after dark — collected {totalHearts} Glowing Hearts, and unlocked the
+                permanent title:
               </p>
               <div className="font-pixel text-[10px] sm:text-xs text-amber-900 font-bold bg-amber-100 p-2 border-2 border-amber-400 max-w-md mx-auto">
-                ✨ "THE UNBEATABLE DUO: YEAR ONE MASTERED" ✨
+                ✨ "YOU REMEMBERED OUR STORY — YEAR ONE MASTERED" ✨
               </div>
             </div>
           </div>

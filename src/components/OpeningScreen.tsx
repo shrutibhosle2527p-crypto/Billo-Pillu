@@ -37,7 +37,7 @@ export const OpeningScreen: React.FC<OpeningScreenProps> = ({
       {/* Top Banner Tagline */}
       <div className="relative z-10 pt-1">
         <span className="text-[9px] md:text-[10px] text-pink-300 tracking-widest uppercase bg-[#160624]/85 px-4 py-1 pixel-corners border border-pink-500/60 shadow">
-          ✨ A 1-Year Anniversary Love Story Made Just For Us ✨
+          ✨ A 1-Year Anniversary Love Story — Billo & Pillu ✨
         </span>
       </div>
 
@@ -51,7 +51,7 @@ export const OpeningScreen: React.FC<OpeningScreenProps> = ({
         </h2>
 
         <p className="font-retro text-xl sm:text-2xl md:text-3xl text-pink-100 max-w-xl leading-relaxed drop-shadow mb-4 px-2">
-          "365 days of warm hugs, silly arguments, midnight calls, and infinite love."
+          "365 DAYS. INFINITE MEMORIES. ONE FAVOURITE PERSON."
         </p>
 
         {/* Character Selection Cards - Authentic sprites side-by-side on same baseline */}

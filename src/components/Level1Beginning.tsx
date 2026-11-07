@@ -45,44 +45,44 @@ export const Level1Beginning: React.FC<Level1BeginningProps> = ({
   // 5 Hidden Hearts placed along the horizontal walking path (at consistent elevation)
   const hiddenHearts: HiddenHeart[] = [
     {
-      id: 'h1_tree',
-      name: 'Heart of the First Hello',
+      id: 'h1_sea',
+      name: 'The Flower by the Sea',
       x: 16,
-      title: 'Under the Ancient Tree',
-      message: 'That first awkward, adorable hello under the sunny sky. A simple message that started our whole world.',
-      partnerReaction: `${partnerChar.name}: "I still remember how my heart raced the exact second you replied!"`,
+      title: '7 November 2025 — By the Sea',
+      message: 'The evening Pillu asked Billo to be his girlfriend by the sea. She asked him to give her a flower first. Our story officially began.',
+      partnerReaction: `${partnerChar.name}: "Remember the flower by the sea? That was the moment everything started."`,
     },
     {
-      id: 'h2_flowers',
-      name: 'Heart of Shy Smiles',
+      id: 'h2_picnic',
+      name: 'The Forest Picnic',
       x: 32,
-      title: 'Beside the Wildflowers',
-      message: 'Sneaking shy glances, smiling secretly, and getting butterflies every time our eyes met.',
-      partnerReaction: `${activeChar.name}: "You thought I didn't notice you staring, but I saw every single smile!"`,
+      title: '8 November 2025 — Sanjay Gandhi National Park',
+      message: 'Our first adventure picnic! Cycling through the greenery to Kanheri Caves, and Pillu made herb rice with peri-peri gravy just for us.',
+      partnerReaction: `${activeChar.name}: "You made herb rice just for our picnic. That was so Pillu."`,
     },
     {
-      id: 'h3_stream',
-      name: 'Heart of Holding Hands',
+      id: 'h3_bus',
+      name: 'The Last Seat',
       x: 50,
-      title: 'By the Gentle Brook',
-      message: 'The very first time our fingers laced together. It felt so completely natural, like coming home.',
-      partnerReaction: `${partnerChar.name}: "Holding your hand is still the greatest feeling in the world."`,
+      title: 'The AC Bus to Thane',
+      message: 'On our way back from the picnic, a fully air-conditioned bus towards Thane. The last seat, just us, and our second kiss.',
+      partnerReaction: `${partnerChar.name}: "The last seat of the AC bus will always be special."`,
     },
     {
-      id: 'h4_hilltop',
-      name: 'Heart of Endless Talks',
+      id: 'h4_holi',
+      name: 'Colours of Holi',
       x: 68,
-      title: 'Along the Green Ridge',
-      message: 'Talking for hours about our dreams, silly childhood moments, and realizing time flies when we are together.',
-      partnerReaction: `${activeChar.name}: "Even comfortable silence with you feels warmer than anything else."`,
+      title: 'Our First Holi Together',
+      message: 'Pillu took a bus and surprised Billo at her society. Colours, rain-dance, laughter, and meeting her childhood friends. Pure chaos, pure joy.',
+      partnerReaction: `${activeChar.name}: "Our first Holi was pure chaos — the best kind of chaos."`,
     },
     {
-      id: 'h5_clouds',
-      name: 'Heart of Realization',
+      id: 'h5_year',
+      name: 'One Favourite Person',
       x: 84,
-      title: 'At the Scenic Lookout',
-      message: 'The quiet certainty: "I am completely, truly in love with my favorite person."',
-      partnerReaction: `${partnerChar.name}: "And 365 days later, I love you a thousand times more."`,
+      title: '365 Days Later',
+      message: 'One year later, and you are still my favourite person. From the flower by the sea to every little memory, it all brought us here.',
+      partnerReaction: `${partnerChar.name}: "Through happy days and difficult days, we were there for each other."`,
     },
   ];
 
@@ -104,14 +104,14 @@ export const Level1Beginning: React.FC<Level1BeginningProps> = ({
 
       const quotes = playerRole === 'billo'
         ? [
-            { lead: "Look Pillu, it's so pretty here! ✨", partner: "Not as pretty as you, Billo! 🥰" },
-            { lead: "Hold my hand, Pillu! 💙", partner: "Always and forever, Meri Jaan! 💕" },
-            { lead: "365 days flew by so fast! 🥹", partner: "Here's to a hundred more years! 💖" },
+            { lead: "Remember the flower by the sea? 🌸", partner: "I'd give you a thousand more, Billo! 💕" },
+            { lead: "Our herb rice picnic was the best! 🚲", partner: "Anything for you, Meri Jaan! 💖" },
+            { lead: "365 days and you're still my favourite! 🥹", partner: "One year later, still my whole world! 💖" },
           ]
         : [
-            { lead: "Hey Billo, you doing okay? 😎", partner: "Always when I'm with you, Pillu! 💙" },
-            { lead: "Look at that tree, cutie! 🌳", partner: "Remember where we first met? ✨" },
-            { lead: "I love you, Billo! 🖤", partner: "I love you more, Pillu! 💖" },
+            { lead: "The last seat of that bus, huh? 😎", partner: "Always special, always us, Pillu! 💙" },
+            { lead: "Our first Holi was pure chaos! 🎨", partner: "The best kind of chaos with you! 💕" },
+            { lead: "Bangkok after dark, remember? 🌃", partner: "Seven Eleven and our little adventure! 💖" },
           ];
 
       const choice = quotes[Math.floor(Math.random() * quotes.length)];
@@ -233,7 +233,7 @@ export const Level1Beginning: React.FC<Level1BeginningProps> = ({
 
         {/* Level Goal Bar (Pinned top left) */}
         <div className="absolute top-2.5 left-2.5 bg-[#130620]/90 text-pink-200 px-3 py-1 pixel-corners border border-pink-500/70 pointer-events-none shadow-md flex items-center gap-3 text-[9px] z-20">
-          <span className="text-yellow-300 font-bold">LEVEL 1: THE BEGINNING</span>
+          <span className="text-yellow-300 font-bold">LEVEL 1: OUR STORY BEGINS</span>
           <span className="text-pink-300">
             Memories: <strong className="text-yellow-300">{collectedHeartIds.length}/{hiddenHearts.length}</strong>
           </span>

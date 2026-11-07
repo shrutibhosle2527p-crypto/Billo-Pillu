@@ -58,12 +58,12 @@ export const Level2Quiz: React.FC<Level2QuizProps> = ({
       sound.playHeartPickup();
       setScore((s) => s + 1);
       onAwardHearts(isSpeedRound ? 3 : 2); // Bonus hearts for quiz questions
-      setBilloBubble('Spot on, cutie! 🥰');
-      setPilluBubble("I knew you'd get it! 💖");
+      setBilloBubble('You remembered! 🥰');
+      setPilluBubble("That's our story! 💖");
     } else {
       sound.playJump();
-      setBilloBubble('Aww, silly moment! 😂');
-      setPilluBubble('Still my favorite anyway! 💕');
+      setBilloBubble('Aww, close one! 😂');
+      setPilluBubble('Still my favourite! 💕');
     }
   };
 
@@ -198,7 +198,7 @@ export const Level2Quiz: React.FC<Level2QuizProps> = ({
             You scored <span className="text-green-300 font-bold">{score} / {QUIZ_QUESTIONS.length}</span>!
           </p>
           <p className="font-retro text-xl sm:text-2xl text-pink-300 mb-4 max-w-lg leading-relaxed">
-            "Whether we agree on pizza or fight over stolen fries, you know our love story by heart!"
+            "From the flower by the sea to Bangkok after dark — you know our story by heart!"
           </p>
 
           <div className="flex items-center gap-4 mb-4">

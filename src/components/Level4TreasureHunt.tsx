@@ -33,10 +33,10 @@ export const Level4TreasureHunt: React.FC<Level4TreasureHuntProps> = ({
   const partnerRole: CharacterRole = playerRole === 'billo' ? 'pillu' : 'billo';
   const partnerChar = CHARACTERS[partnerRole];
 
-  // Distribute the 5 chests along the horizontal walking path
+  // Distribute the 10 chests along the horizontal walking path
   const chests = TREASURE_CHESTS.map((c, idx) => ({
     ...c,
-    x: 14 + idx * 18, // 14%, 32%, 50%, 68%, 86%
+    x: 8 + idx * 9.5, // 8%, 17.5%, 27%, ... ~94%
   }));
 
   const allChestsOpened = chests.every((c) => openedChestIds.includes(c.id));
@@ -54,14 +54,14 @@ export const Level4TreasureHunt: React.FC<Level4TreasureHuntProps> = ({
 
       const quotes = playerRole === 'billo'
         ? [
-            { lead: "Pillu, let's open all the chests! 📦", partner: "I'm right behind you, Billo! 😎" },
-            { lead: "Remember our anniversary gifts? 🎁", partner: "Every memory with you is treasure! 💕" },
-            { lead: "You're my favorite human! 💖", partner: "And you're my whole world, cutie! 🥰" },
+            { lead: "Pillu, let's open all the memory chests! 📦", partner: "Every chest is a piece of us, Billo! 😎" },
+            { lead: "Remember the flower by the sea? 🌸", partner: "That was just the beginning, Meri Jaan! 💕" },
+            { lead: "Two balloons and one dragon ride! 🎈", partner: "You confessed your love on that ride! 💖" },
           ]
         : [
-            { lead: "Found another chest for us, Billo! 👑", partner: "Yay! Let's open it together, Pillu! 💙" },
-            { lead: "Look at all the hearts we collected! 💖", partner: "365 days of love, Meri Jaan! 💕" },
-            { lead: "You look so adorable today! 🥰", partner: "Aww stop, Pillu! 😂💖" },
+            { lead: "Found another memory chest, Billo! 👑", partner: "Yay! Let's unlock it together, Pillu! 💙" },
+            { lead: "Bangkok after dark, remember? 🌃", partner: "Seven Eleven and our little adventure! 💕" },
+            { lead: "We did our internship at Aabo together! 💼", partner: "Three months of growing together! 💖" },
           ];
 
       const choice = quotes[Math.floor(Math.random() * quotes.length)];

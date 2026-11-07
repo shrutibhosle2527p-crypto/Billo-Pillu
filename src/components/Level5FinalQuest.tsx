@@ -39,36 +39,36 @@ export const Level5FinalQuest: React.FC<Level5FinalQuestProps> = ({
   const vows = [
     {
       id: 1,
-      title: 'Vow of Patience & Warm Hugs',
-      desc: 'To always listen, apologize quickly, and hug tighter through every little misunderstanding.',
-      icon: '🫂',
-      billoSay: 'Always warm hugs! 💕',
-      pilluSay: 'And no sleeping angry! 🫂',
+      title: 'Vow of the Flower & the Sea',
+      desc: 'To always remember the evening it began — the flower by the sea, 7 November 2025, and to keep choosing each other every single day after.',
+      icon: '🌸',
+      billoSay: 'The flower by the sea, always! 💕',
+      pilluSay: '7 November 2025, forever! 🌸',
     },
     {
       id: 2,
-      title: 'Vow of Endless Laughter & Shared Food',
-      desc: 'To share every last bite of fries, send silly midnight memes, and laugh until our bellies ache.',
-      icon: '🍟',
-      billoSay: 'Save me the fries! 🍟',
-      pilluSay: 'All the snacks are yours! 😂',
+      title: 'Vow of Adventures Big & Small',
+      desc: 'From cycling to Kanheri Caves with herb rice to wandering Bangkok after dark — to keep saying yes to every adventure, together.',
+      icon: '🚲',
+      billoSay: 'Every adventure with you! 🚲',
+      pilluSay: 'Kanheri to Bangkok and beyond! 🌃',
     },
     {
       id: 3,
-      title: 'Vow of Choosing You, Every Single Day',
-      desc: 'Through 365 days and all the years ahead, you are my one and only favorite person in the entire universe.',
+      title: 'Vow of Through It All',
+      desc: 'Through happy days and difficult days, through festivals and ferris wheels, through internships and midnight birthday corners — to always be there for each other. One year later, still my favourite person.',
       icon: '👑',
-      billoSay: 'Forever my favorite! 💖',
-      pilluSay: 'Eternity with you, Meri Jaan! 👑',
+      billoSay: 'Through it all, always! 💖',
+      pilluSay: 'One favourite person, forever! 👑',
     },
   ];
 
   const finalDialogueLines = [
-    { speaker: 'partner', text: `${partnerChar.name}: "Can you believe we have spent 365 days together already?"`, bubble: '365 days already! 🥹' },
-    { speaker: 'active', text: `${activeChar.name}: "Every single day with you has felt like the sweetest adventure."`, bubble: 'The sweetest adventure! ✨' },
-    { speaker: 'partner', text: `${partnerChar.name}: "Through all the late night calls, silly arguments, and warm hugs... you became my whole world."`, bubble: 'You are my whole world 💕' },
-    { speaker: 'active', text: `${activeChar.name}: "You are my safest place, my biggest smile, and my forever player two."`, bubble: 'My forever player two 👑' },
-    { speaker: 'both', text: `Together: "Happy 1st Anniversary! Here is to eternity, cutie! 💖"`, bubble: 'Happy Anniversary! 💖' },
+    { speaker: 'partner', text: `${partnerChar.name}: "From the flower by the sea to the last seat of the bus... can you believe it's been 365 days?"`, bubble: '365 days already! 🥹' },
+    { speaker: 'active', text: `${activeChar.name}: "From our first picnic at Kanheri Caves to Bangkok after dark — every little memory brought us here."`, bubble: 'Every memory, every moment! ✨' },
+    { speaker: 'partner', text: `${partnerChar.name}: "Through Holi chaos, Navratri nights, the dragon ride, and our internship at Aabo... we grew together."`, bubble: 'We grew together 💕' },
+    { speaker: 'active', text: `${activeChar.name}: "Through happy days and difficult days, we were there for each other. You are still my favourite person."`, bubble: 'Still my favourite person 👑' },
+    { speaker: 'both', text: `Together: "YOU REMEMBERED OUR STORY. 365 DAYS. INFINITE MEMORIES. ONE FAVOURITE PERSON. 💖"`, bubble: 'Happy Anniversary! 💖' },
   ];
 
   // Stage 1: Unlock Vow
@@ -151,7 +151,7 @@ export const Level5FinalQuest: React.FC<Level5FinalQuestProps> = ({
               Challenge 1 of 3: The 3 Golden Vows
             </span>
             <p className="font-retro text-xl sm:text-2xl text-pink-200">
-              Unlock all 3 vows of our relationship to forge the Key of Forever!
+              Unlock all 3 vows of our story to forge the Key of Forever!
             </p>
           </div>
 
@@ -261,7 +261,7 @@ export const Level5FinalQuest: React.FC<Level5FinalQuestProps> = ({
               Challenge 3 of 3: The 365th Sunrise
             </span>
             <p className="font-retro text-xl sm:text-2xl text-pink-200">
-              Holding hands at the summit of our 1-year journey.
+              Holding hands at the summit of our 365-day story.
             </p>
           </div>
 
