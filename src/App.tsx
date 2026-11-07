@@ -148,7 +148,7 @@ export const App: React.FC = () => {
   };
 
   return (
-    <div className="h-screen w-screen bg-[#07020c] flex flex-col items-center justify-center p-2 sm:p-4 overflow-hidden select-none font-pixel text-pink-100">
+    <div className="h-screen w-full bg-[#07020c] flex flex-col items-center justify-center p-2 sm:p-4 overflow-hidden select-none font-pixel text-pink-100">
       {/* Top Floating Milestone Toast Notification */}
       {milestoneToast && (
         <div className="fixed top-4 left-1/2 -translate-x-1/2 z-50 bg-gradient-to-r from-pink-600 via-rose-600 to-yellow-500 text-black px-5 py-2.5 pixel-border border-yellow-300 shadow-2xl flex items-center gap-3">
@@ -163,7 +163,7 @@ export const App: React.FC = () => {
       )}
 
       {/* Unified Master Game Console Viewport */}
-      <main className="relative w-full max-w-[1040px] aspect-[16/9] max-h-[92vh] min-h-[480px] bg-[#12051d] pixel-border border-pink-500/80 shadow-[0_0_35px_rgba(255,105,180,0.25)] flex flex-col justify-between overflow-hidden rounded-md">
+      <main className="relative w-full max-w-[1040px] aspect-[16/9] max-h-[88vh] min-h-[420px] bg-[#12051d] pixel-border border-pink-500/80 shadow-[0_0_35px_rgba(255,105,180,0.25)] flex flex-col justify-between overflow-hidden rounded-md">
         {gameState.currentLevel === 'TITLE' ? (
           <OpeningScreen
             playerRole={gameState.playerRole}
