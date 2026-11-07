@@ -1,0 +1,6 @@
+{
+  "name": "Billo & Pillu: The Love Quest",
+  "description": "An anniversary adventure RPG celebrating one year of love, memories, and milestones.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
