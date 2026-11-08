@@ -16,10 +16,12 @@ import {
   resetGameState,
   saveGameState,
 } from './utils/storage';
+import { HomeMenu } from './components/HomeMenu';
 
 export const App: React.FC = () => {
   const [gameState, setGameState] = useState<GameSaveState>(() => loadGameState());
   const [showLetterModal, setShowLetterModal] = useState(false);
+  const [showHomeMenu, setShowHomeMenu] = useState(false);
   const [milestoneToast, setMilestoneToast] = useState<{ label: string; text: string } | null>(null);
 
   // Auto-persist state
@@ -182,6 +184,7 @@ export const App: React.FC = () => {
               onSelectLevel={handleSelectLevel}
               onOpenLetter={() => setShowLetterModal(true)}
               onResetGame={handleRestartGame}
+              onHome={() => setShowHomeMenu(true)}
             />
 
             {/* Active Level Stage Area */}
@@ -264,6 +267,43 @@ export const App: React.FC = () => {
             setGameState((prev) => ({ ...prev, customLoveLetter: newContent }))
           }
           onClose={() => setShowLetterModal(false)}
+        />
+      )}
+
+      {/* Home Menu Modal */}
+      {showHomeMenu && (
+        <HomeMenu
+          isOpen={showHomeMenu}
+          onClose={() => setShowHomeMenu(false)}
+          playerRole={gameState.playerRole}
+          totalHearts={gameState.totalHearts}
+          unlockedLevels={gameState.unlockedLevels}
+          currentLevel={gameState.currentLevel}
+          level1HeartsFound={gameState.level1HeartsFound}
+          level4ChestsOpened={gameState.level4ChestsOpened}
+          level2Completed={gameState.level2Completed}
+          level3Completed={gameState.level3Completed}
+          level5Completed={gameState.level5Completed}
+          customLoveLetter={gameState.customLoveLetter}
+          onSelectLevel={(lvl) => {
+            if (lvl !== 'TITLE') handleSelectLevel(lvl);
+            setShowHomeMenu(false);
+          }}
+          onPlayFromStart={() => {
+            setGameState((prev) => ({ ...prev, currentLevel: 1 }));
+            setShowHomeMenu(false);
+          }}
+          onContinue={() => {
+            setShowHomeMenu(false);
+          }}
+          onOpenLetter={() => {
+            setShowHomeMenu(false);
+            setShowLetterModal(true);
+          }}
+          onResetGame={() => {
+            handleRestartGame();
+            setShowHomeMenu(false);
+          }}
         />
       )}
 

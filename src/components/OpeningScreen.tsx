@@ -69,10 +69,10 @@ export const OpeningScreen: React.FC<OpeningScreenProps> = ({
                 : 'bg-black/50 border border-pink-800/60 opacity-80 hover:opacity-100'
             }`}
           >
-            <div className="h-[96px] sm:h-[108px] flex items-end justify-center">
+            <div className="h-[120px] sm:h-[136px] flex items-end justify-center">
               <CharacterSprite
                 role="billo"
-                size={80}
+                size={104}
                 animation={playerRole === 'billo' ? 'happy' : 'idle'}
                 showHeart={playerRole === 'billo'}
                 showNameTag={true}
@@ -106,10 +106,10 @@ export const OpeningScreen: React.FC<OpeningScreenProps> = ({
                 : 'bg-black/50 border border-blue-900/60 opacity-80 hover:opacity-100'
             }`}
           >
-            <div className="h-[96px] sm:h-[108px] flex items-end justify-center">
+            <div className="h-[120px] sm:h-[136px] flex items-end justify-center">
               <CharacterSprite
                 role="pillu"
-                size={80}
+                size={104}
                 animation={playerRole === 'pillu' ? 'happy' : 'idle'}
                 showHeart={playerRole === 'pillu'}
                 showNameTag={true}

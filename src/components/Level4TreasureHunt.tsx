@@ -3,6 +3,7 @@ import { CharacterRole, TreasureChestData } from '../types';
 import { sound } from '../utils/audio';
 import { CHARACTERS, TREASURE_CHESTS } from '../utils/storage';
 import { CharacterSprite, MEADOW_BG_URL } from './CharacterSprite';
+import { CoupleInteraction } from './CoupleInteraction';
 
 interface Level4TreasureHuntProps {
   playerRole: CharacterRole;
@@ -27,6 +28,7 @@ export const Level4TreasureHunt: React.FC<Level4TreasureHuntProps> = ({
   const [leaderBubble, setLeaderBubble] = useState<string | null>(null);
   const [partnerBubble, setPartnerBubble] = useState<string | null>(null);
   const [partnerNearSpark, setPartnerNearSpark] = useState(false);
+  const [showCoupleInteraction, setShowCoupleInteraction] = useState(false);
   const lastProximityDialogueRef = useRef<number>(0);
 
   const activeChar = CHARACTERS[playerRole];
@@ -272,7 +274,7 @@ export const Level4TreasureHunt: React.FC<Level4TreasureHuntProps> = ({
         >
           <CharacterSprite
             role={partnerRole}
-            size={74}
+            size={110}
             direction={direction}
             animation={isWalking ? 'walking' : 'idle'}
             dialogueBubble={partnerBubble}
@@ -294,7 +296,7 @@ export const Level4TreasureHunt: React.FC<Level4TreasureHuntProps> = ({
         >
           <CharacterSprite
             role={playerRole}
-            size={78}
+            size={116}
             direction={direction}
             animation={isWalking ? 'walking' : 'idle'}
             dialogueBubble={leaderBubble}
@@ -344,8 +346,33 @@ export const Level4TreasureHunt: React.FC<Level4TreasureHuntProps> = ({
           >
             Right ▶
           </button>
+          <button
+            onClick={() => { sound.playJump(); setShowCoupleInteraction(true); }}
+            className="px-2.5 py-1 bg-pink-800 hover:bg-pink-700 border border-yellow-400 text-yellow-200 font-bold active:scale-95 pixel-corners cursor-pointer"
+          >
+            💕 Couple
+          </button>
         </div>
       </div>
+
+      {/* Couple Interaction Overlay */}
+      {showCoupleInteraction && (
+        <div className="absolute inset-0 z-40 bg-[#0a0414]/90 flex flex-col items-center justify-center animate-fade-in p-4">
+          <h3 className="text-[10px] text-yellow-300 font-bold uppercase mb-2">Billo & Pillu Together</h3>
+          <CoupleInteraction
+            size={120}
+            gap={56}
+            showButtons={true}
+            showNameTag={true}
+          />
+          <button
+            onClick={() => { sound.playJump(); setShowCoupleInteraction(false); }}
+            className="mt-4 px-4 py-1.5 bg-pink-900 hover:bg-pink-800 text-pink-200 text-[9px] pixel-corners border border-pink-500 cursor-pointer"
+          >
+            ← Back to Treasure Hunt
+          </button>
+        </div>
+      )}
 
       {/* Docked Bottom Dialogue Box for Opened Chest Keepsakes */}
       {activeChest && (

@@ -159,8 +159,8 @@ export const Level5FinalQuest: React.FC<Level5FinalQuestProps> = ({
           {/* Billo and Pillu — Interactive Couple with Vow Bubbles */}
           <div className="my-1">
             <CoupleInteraction
-              size={64}
-              gap={40}
+              size={92}
+              gap={48}
               showNameTag={true}
               showButtons={true}
               billoBubble={vowBubble.billo}
@@ -239,9 +239,9 @@ export const Level5FinalQuest: React.FC<Level5FinalQuestProps> = ({
           </div>
 
           <div className="flex items-center gap-4">
-            <CharacterSprite role="billo" size={58} animation="happy" dialogueBubble={heartHarmonyHits > 2 ? 'In sync! 💕' : null} showNameTag={true} />
+            <CharacterSprite role="billo" size={80} animation="happy" dialogueBubble={heartHarmonyHits > 2 ? 'In sync! 💕' : null} showNameTag={true} />
             <div className="text-2xl text-pink-400">✨</div>
-            <CharacterSprite role="pillu" size={58} animation="happy" dialogueBubble={heartHarmonyHits > 2 ? 'One heartbeat! 💖' : null} showNameTag={true} />
+            <CharacterSprite role="pillu" size={80} animation="happy" dialogueBubble={heartHarmonyHits > 2 ? 'One heartbeat! 💖' : null} showNameTag={true} />
           </div>
         </div>
       )}
@@ -261,8 +261,8 @@ export const Level5FinalQuest: React.FC<Level5FinalQuestProps> = ({
           {/* Billo & Pillu — Interactive Couple with Final Dialogue */}
           <div className="my-auto pt-6">
             <CoupleInteraction
-              size={86}
-              gap={48}
+              size={108}
+              gap={52}
               showNameTag={true}
               showButtons={true}
               billoBubble={

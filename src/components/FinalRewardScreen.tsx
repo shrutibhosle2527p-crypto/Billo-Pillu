@@ -148,8 +148,8 @@ export const FinalRewardScreen: React.FC<FinalRewardScreenProps> = ({
           <div className="my-1 flex items-end justify-center gap-4 sm:gap-6">
             <div className="h-[90px] sm:h-[110px] flex items-end justify-center">
               <CoupleInteraction
-                size={86}
-                gap={48}
+                size={100}
+                gap={52}
                 showNameTag={true}
                 showButtons={true}
                 className="scale-90 sm:scale-100"

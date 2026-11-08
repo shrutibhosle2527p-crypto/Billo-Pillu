@@ -100,7 +100,7 @@ export const Level2Quiz: React.FC<Level2QuizProps> = ({
             <div className="flex items-end gap-3 sm:gap-4 pt-4">
               <CharacterSprite
                 role="billo"
-                size={58}
+                size={84}
                 animation={hasAnswered && selectedOption === question.correctIndex ? 'celebrate' : 'idle'}
                 dialogueBubble={billoBubble}
                 showHeart={hasAnswered && selectedOption === question.correctIndex}
@@ -108,7 +108,7 @@ export const Level2Quiz: React.FC<Level2QuizProps> = ({
               />
               <CharacterSprite
                 role="pillu"
-                size={58}
+                size={84}
                 animation={hasAnswered && selectedOption === question.correctIndex ? 'celebrate' : 'idle'}
                 dialogueBubble={pilluBubble}
                 showHeart={hasAnswered && selectedOption === question.correctIndex}
@@ -204,9 +204,9 @@ export const Level2Quiz: React.FC<Level2QuizProps> = ({
           </p>
 
           <div className="flex items-center gap-4 mb-4">
-            <CharacterSprite role="billo" size={68} animation="celebrate" showHeart={true} showNameTag={true} />
+            <CharacterSprite role="billo" size={88} animation="celebrate" showHeart={true} showNameTag={true} />
             <div className="text-3xl text-pink-400 animate-pulse">💖</div>
-            <CharacterSprite role="pillu" size={68} animation="celebrate" showHeart={true} showNameTag={true} />
+            <CharacterSprite role="pillu" size={88} animation="celebrate" showHeart={true} showNameTag={true} />
           </div>
 
           <button

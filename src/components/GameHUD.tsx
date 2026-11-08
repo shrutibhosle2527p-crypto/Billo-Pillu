@@ -13,7 +13,16 @@ interface GameHUDProps {
   onSelectLevel: (lvl: GameLevelId | 'FINAL_REWARD') => void;
   onOpenLetter: () => void;
   onResetGame: () => void;
+  onHome: () => void;
 }
+
+const LEVEL_NAMES: Record<GameLevelId, string> = {
+  1: 'Our Story Begins',
+  2: 'Relationship Quiz',
+  3: 'The Heart Rush',
+  4: 'Treasure Hunt',
+  5: 'The Final Quest',
+};
 
 export const GameHUD: React.FC<GameHUDProps> = ({
   currentLevel,
@@ -24,23 +33,13 @@ export const GameHUD: React.FC<GameHUDProps> = ({
   onSelectLevel,
   onOpenLetter,
   onResetGame,
+  onHome,
 }) => {
-  const [isFullscreen, setIsFullscreen] = useState(false);
   const [musicOn, setMusicOn] = useState(sound.bgmEnabled);
   const [sfxOn, setSfxOn] = useState(sound.soundEnabled);
 
   const milestone = getMilestoneTier(totalHearts);
   const activeChar = CHARACTERS[playerRole];
-
-  const toggleFullscreen = () => {
-    if (!document.fullscreenElement) {
-      document.documentElement.requestFullscreen().catch(() => {});
-      setIsFullscreen(true);
-    } else {
-      document.exitFullscreen().catch(() => {});
-      setIsFullscreen(false);
-    }
-  };
 
   const toggleMusic = () => {
     const next = sound.toggleBgm();
@@ -53,35 +52,38 @@ export const GameHUD: React.FC<GameHUDProps> = ({
     if (sound.soundEnabled) sound.playJump();
   };
 
-  const levelShortNames: Record<GameLevelId, string> = {
-    1: '1. Tree',
-    2: '2. Quiz',
-    3: '3. Rush',
-    4: '4. Treasure',
-    5: '5. Vows',
-  };
+  const currentLevelName =
+    currentLevel === 'FINAL_REWARD'
+      ? 'Anniversary Reward'
+      : currentLevel === 'TITLE'
+      ? 'Title'
+      : `Ch. ${currentLevel}: ${LEVEL_NAMES[currentLevel]}`;
 
   return (
-    <header className="w-full h-11 sm:h-12 bg-[#150522]/95 border-b border-pink-500/70 px-2 sm:px-3 flex items-center justify-between gap-1 sm:gap-2 z-30 shrink-0 select-none font-pixel">
-      {/* Left: Lead Character Badge & Quick Switch */}
+    <header className="w-full h-11 sm:h-12 bg-[#150522]/95 border-b border-pink-500/70 px-2 sm:px-3 flex items-center justify-between gap-1.5 sm:gap-2 z-30 shrink-0 select-none font-pixel">
+      {/* Left: Home button + Chapter name */}
       <div className="flex items-center gap-1.5 sm:gap-2 shrink-0">
         <button
           type="button"
-          onClick={onSwitchCharacter}
-          title="Click to switch lead character"
-          className="flex items-center gap-1 bg-pink-950/80 hover:bg-pink-900 border border-pink-500/80 px-1.5 py-0.5 pixel-corners cursor-pointer transition-colors"
+          onClick={() => { sound.playJump(); onHome(); }}
+          title="Open Main Menu"
+          aria-label="Open Main Menu"
+          className="flex items-center gap-1 bg-pink-950/80 hover:bg-pink-900 border border-yellow-400/80 px-2 py-1 pixel-corners cursor-pointer transition-colors"
         >
-          <div className="w-5 h-6 overflow-hidden flex items-end justify-center">
-            <CharacterSprite role={playerRole} size={28} animation="idle" />
-          </div>
-          <span className="text-[8px] sm:text-[9px] text-yellow-300 font-bold whitespace-nowrap">
-            {activeChar.name} 🔄
-          </span>
+          <span className="text-sm">🏠</span>
+          <span className="text-[8px] sm:text-[9px] text-yellow-300 font-bold">Home</span>
         </button>
+
+        <div className="hidden sm:flex items-center gap-1 bg-black/40 px-2 py-0.5 pixel-corners border border-pink-800/60">
+          <span className="text-[8px] text-pink-300">📍</span>
+          <span className="text-[8px] text-yellow-200 font-bold whitespace-nowrap max-w-[120px] truncate">
+            {currentLevelName}
+          </span>
+        </div>
       </div>
 
-      {/* Center: Clean Level Progression Tabs */}
-      <div className="flex items-center gap-1 overflow-x-auto py-0.5 max-w-[48%] justify-center">
+      {/* Center: Level progression tabs */}
+      <div className="flex items-center gap-0.5 sm:gap-1 overflow-x-auto py-0.5 justify-center">
         {[1, 2, 3, 4, 5].map((lvlNum) => {
           const id = lvlNum as GameLevelId;
           const isUnlocked = unlockedLevels.includes(id);
@@ -95,7 +97,8 @@ export const GameHUD: React.FC<GameHUDProps> = ({
                 sound.playJump();
                 onSelectLevel(id);
               }}
-              className={`px-1.5 sm:px-2 py-0.5 sm:py-1 text-[8px] pixel-corners border transition-all whitespace-nowrap cursor-pointer ${
+              aria-label={`Go to Chapter ${id}`}
+              className={`w-6 h-6 sm:w-7 sm:h-7 text-[8px] pixel-corners border transition-all flex items-center justify-center cursor-pointer ${
                 isCurrent
                   ? 'bg-yellow-400 text-black border-yellow-200 font-bold shadow-[0_0_6px_gold]'
                   : isUnlocked
@@ -103,58 +106,55 @@ export const GameHUD: React.FC<GameHUDProps> = ({
                   : 'bg-black/40 text-gray-600 border-gray-800 opacity-50 cursor-not-allowed'
               }`}
             >
-              {isUnlocked ? levelShortNames[id] : `🔒 Lvl ${id}`}
+              {isUnlocked ? lvlNum : '🔒'}
             </button>
           );
         })}
-
-        {unlockedLevels.includes(5) && (
-          <button
-            onClick={() => {
-              sound.playFanfare();
-              onSelectLevel('FINAL_REWARD');
-            }}
-            className={`px-2 py-0.5 sm:py-1 text-[8px] pixel-corners border whitespace-nowrap cursor-pointer ${
-              currentLevel === 'FINAL_REWARD'
-                ? 'bg-gradient-to-r from-yellow-400 to-amber-500 text-black font-bold shadow-[0_0_8px_gold]'
-                : 'bg-gradient-to-r from-pink-600 to-rose-600 text-white border-yellow-300 animate-pulse'
-            }`}
-          >
-            🏆 Finale
-          </button>
-        )}
       </div>
 
-      {/* Right: Heart Counter, Letter, Audio & Utility */}
-      <div className="flex items-center gap-1 sm:gap-2 shrink-0">
+      {/* Right: Hearts, Character, Audio */}
+      <div className="flex items-center gap-1 sm:gap-1.5 shrink-0">
         {/* Heart Counter */}
         <div
           className="flex items-center gap-1 bg-black/60 px-2 py-0.5 pixel-corners border border-pink-500/80"
           title={`Milestone: ${milestone.label}`}
         >
-          <span className="text-xs sm:text-sm animate-float-heart">💖</span>
+          <span className="text-xs animate-float-heart">💖</span>
           <span className="text-[10px] sm:text-xs text-yellow-300 font-bold">{totalHearts}</span>
         </div>
 
-        {/* Love Letter Button */}
+        {/* Character switch */}
         <button
-          onClick={() => {
-            sound.playJump();
-            onOpenLetter();
-          }}
-          title="Open Anniversary Love Letter"
-          className="px-1.5 sm:px-2 py-0.5 sm:py-1 bg-pink-900/60 hover:bg-pink-800 text-yellow-300 border border-yellow-500/60 text-[8px] sm:text-[9px] pixel-corners flex items-center gap-1 cursor-pointer"
+          type="button"
+          onClick={onSwitchCharacter}
+          title="Click to switch lead character"
+          aria-label="Switch lead character"
+          className="flex items-center gap-1 bg-pink-950/80 hover:bg-pink-900 border border-pink-500/80 px-1 py-0.5 pixel-corners cursor-pointer transition-colors"
         >
-          <span>💌</span>
-          <span className="hidden sm:inline">Letter</span>
+          <div className="w-5 h-6 overflow-hidden flex items-end justify-center">
+            <CharacterSprite role={playerRole} size={28} animation="idle" />
+          </div>
+          <span className="text-[7px] sm:text-[8px] text-yellow-300 font-bold whitespace-nowrap">
+            {activeChar.name} 🔄
+          </span>
         </button>
 
-        {/* Music Toggle */}
+        {/* Letter */}
+        <button
+          onClick={() => { sound.playJump(); onOpenLetter(); }}
+          title="Open Anniversary Love Letter"
+          aria-label="Open Love Letter"
+          className="px-1.5 py-0.5 bg-pink-900/60 hover:bg-pink-800 text-yellow-300 border border-yellow-500/60 text-[8px] pixel-corners cursor-pointer"
+        >
+          💌
+        </button>
+
+        {/* Music */}
         <button
           onClick={toggleMusic}
-          title={musicOn ? 'Mute Chiptune Music' : 'Play Chiptune Music'}
-          aria-label={musicOn ? 'Mute Chiptune Music' : 'Play Chiptune Music'}
-          className={`px-1.5 py-0.5 sm:py-1 text-[8px] pixel-corners border cursor-pointer ${
+          title={musicOn ? 'Mute Music' : 'Play Music'}
+          aria-label={musicOn ? 'Mute Music' : 'Play Music'}
+          className={`px-1.5 py-0.5 text-[8px] pixel-corners border cursor-pointer ${
             musicOn
               ? 'bg-yellow-500 text-black border-yellow-300 font-bold'
               : 'bg-black/50 text-pink-300 border-pink-900'
@@ -163,42 +163,18 @@ export const GameHUD: React.FC<GameHUDProps> = ({
           {musicOn ? '🎵' : '🔇'}
         </button>
 
-        {/* SFX Toggle */}
+        {/* SFX */}
         <button
           onClick={toggleSfx}
           title={sfxOn ? 'Mute SFX' : 'Enable SFX'}
           aria-label={sfxOn ? 'Mute SFX' : 'Enable SFX'}
-          className={`px-1.5 py-0.5 sm:py-1 text-[8px] pixel-corners border cursor-pointer ${
+          className={`px-1.5 py-0.5 text-[8px] pixel-corners border cursor-pointer ${
             sfxOn
               ? 'bg-pink-800 text-white border-pink-500'
               : 'bg-black/50 text-gray-500 border-gray-800'
           }`}
         >
           {sfxOn ? '🔊' : '🔈'}
-        </button>
-
-        {/* Fullscreen Button */}
-        <button
-          onClick={toggleFullscreen}
-          title="Toggle Fullscreen"
-          aria-label="Toggle Fullscreen"
-          className="px-1.5 py-0.5 sm:py-1 bg-black/50 hover:bg-pink-950 text-pink-300 border border-pink-800 text-[8px] pixel-corners cursor-pointer"
-        >
-          {isFullscreen ? '⛶' : '⛶'}
-        </button>
-
-        {/* Reset / Title button */}
-        <button
-          onClick={() => {
-            if (window.confirm('Restart love quest from Level 1? Your sweet memories and love letter will be kept!')) {
-              onResetGame();
-            }
-          }}
-          title="Restart Quest from Level 1"
-          aria-label="Restart Quest from Level 1"
-          className="text-[8px] text-pink-400/60 hover:text-pink-300 p-0.5 cursor-pointer"
-        >
-          ↺
         </button>
       </div>
     </header>

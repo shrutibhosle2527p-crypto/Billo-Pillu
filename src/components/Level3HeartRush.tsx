@@ -251,13 +251,13 @@ export const Level3HeartRush: React.FC<Level3HeartRushProps> = ({
             <div className="flex items-end gap-2">
               <CharacterSprite
                 role="billo"
-                size={54}
+                size={72}
                 animation={combo > 3 ? 'happy' : 'idle'}
                 dialogueBubble={combo >= 10 ? 'Unstoppable! 🔥' : combo >= 5 ? 'Nice catch! 💖' : null}
               />
               <CharacterSprite
                 role="pillu"
-                size={54}
+                size={72}
                 animation={combo > 3 ? 'happy' : 'idle'}
                 dialogueBubble={combo >= 10 ? 'x3 Points! ✨' : combo >= 5 ? 'Keep going! 😎' : null}
               />
@@ -309,8 +309,8 @@ export const Level3HeartRush: React.FC<Level3HeartRushProps> = ({
             </p>
 
             <div className="flex items-center gap-4 my-2">
-              <CharacterSprite role="billo" size={68} animation="celebrate" showHeart={true} />
-              <CharacterSprite role="pillu" size={68} animation="celebrate" showHeart={true} />
+              <CharacterSprite role="billo" size={84} animation="celebrate" showHeart={true} />
+              <CharacterSprite role="pillu" size={84} animation="celebrate" showHeart={true} />
             </div>
 
             <div className="flex items-center gap-3 mt-4">

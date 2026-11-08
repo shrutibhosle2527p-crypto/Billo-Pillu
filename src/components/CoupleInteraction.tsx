@@ -2,21 +2,25 @@ import React, { useState, useRef, useCallback, useEffect } from 'react';
 import { CharacterSprite } from './CharacterSprite';
 import { sound } from '../utils/audio';
 
-export type CouplePose = 'idle' | 'hug' | 'kiss' | 'handhold' | 'cuddle' | 'lean' | 'celebrate';
+export type CouplePose =
+  | 'idle'
+  | 'hug'
+  | 'kiss'
+  | 'handhold'
+  | 'cuddle'
+  | 'lean'
+  | 'cheekkiss'
+  | 'armaround'
+  | 'look'
+  | 'celebrate';
 
 interface CoupleInteractionProps {
   size?: number;
-  /** Initial separation in px between the two characters */
   gap?: number;
-  /** Show the interaction button row below the characters */
   showButtons?: boolean;
-  /** Show name tags under each character */
   showNameTag?: boolean;
-  /** Force a pose (e.g. celebrate on victory screens) */
   forcedPose?: CouplePose;
-  /** Called when a pose is triggered by user */
   onPoseTrigger?: (pose: CouplePose) => void;
-  /** Optional dialogue bubbles (suppressed during interactions) */
   billoBubble?: string | null;
   pilluBubble?: string | null;
   className?: string;
@@ -27,7 +31,10 @@ const POSE_LABELS: { pose: Exclude<CouplePose, 'idle' | 'celebrate'>; icon: stri
   { pose: 'kiss', icon: '💋', label: 'Kiss' },
   { pose: 'handhold', icon: '🤝', label: 'Hold Hands' },
   { pose: 'cuddle', icon: '🏡', label: 'Cuddle' },
+  { pose: 'cheekkiss', icon: '😘', label: 'Cheek Kiss' },
+  { pose: 'armaround', icon: '👫', label: 'Arm Around' },
   { pose: 'lean', icon: '💞', label: 'Lean Together' },
+  { pose: 'look', icon: '👀', label: 'Look at Each Other' },
 ];
 
 const POSE_DURATION: Record<CouplePose, number> = {
@@ -37,6 +44,9 @@ const POSE_DURATION: Record<CouplePose, number> = {
   handhold: 3200,
   cuddle: 3200,
   lean: 2800,
+  cheekkiss: 2400,
+  armaround: 3000,
+  look: 2000,
   celebrate: 0,
 };
 
@@ -47,6 +57,9 @@ const POSE_HEARTS: Record<CouplePose, number> = {
   handhold: 2,
   cuddle: 2,
   lean: 2,
+  cheekkiss: 3,
+  armaround: 2,
+  look: 1,
   celebrate: 4,
 };
 
@@ -62,7 +75,7 @@ export const CoupleInteraction: React.FC<CoupleInteractionProps> = ({
   className = '',
 }) => {
   const [pose, setPose] = useState<CouplePose>('idle');
-  const [hearts, setHearts] = useState<{ id: number; x: number; delay: number }[]>([]);
+  const [hearts, setHearts] = useState<{ id: number; x: number; delay: number; icon: string }[]>([]);
   const lockRef = useRef<ReturnType<typeof setTimeout> | null>(null);
   const heartIdRef = useRef(0);
 
@@ -81,6 +94,7 @@ export const CoupleInteraction: React.FC<CoupleInteractionProps> = ({
           id: heartIdRef.current++,
           x: (i - (count - 1) / 2) * 28,
           delay: i * 180,
+          icon: next === 'kiss' ? '💋' : next === 'cheekkiss' ? '😊' : '💖',
         }));
         setHearts(newHearts);
       }
@@ -100,43 +114,54 @@ export const CoupleInteraction: React.FC<CoupleInteractionProps> = ({
     };
   }, []);
 
-  // Respect forced pose (e.g. celebrate)
   const activePose = forcedPose ?? pose;
 
-  // Compute transforms for each character based on pose
+  // Billo always faces right toward Pillu, Pillu faces left toward Billo
   const getBilloTransform = (): string => {
     switch (activePose) {
       case 'hug':
-        return 'translateX(14px) scaleX(-1)';
+        return 'translateX(18px)';
       case 'kiss':
-        return 'translateX(12px) scaleX(-1) rotate(-3deg)';
+        return 'translateX(16px) rotate(-2deg)';
       case 'handhold':
-        return 'translateX(10px) scaleX(-1)';
+        return 'translateX(12px)';
       case 'cuddle':
-        return 'translateX(16px) scaleX(-1)';
+        return 'translateX(20px)';
       case 'lean':
-        return 'translateX(12px) rotate(4deg) scaleX(-1)';
+        return 'translateX(14px) rotate(5deg)';
+      case 'cheekkiss':
+        return 'translateX(16px) rotate(-4deg)';
+      case 'armaround':
+        return 'translateX(10px)';
+      case 'look':
+        return 'translateX(4px)';
       case 'celebrate':
-        return 'translateY(-4px)';
+        return 'translateY(-6px)';
       default:
-        return 'translateX(0) scaleX(1)';
+        return 'translateX(0)';
     }
   };
 
   const getPilluTransform = (): string => {
     switch (activePose) {
       case 'hug':
-        return 'translateX(-14px)';
+        return 'translateX(-18px)';
       case 'kiss':
-        return 'translateX(-12px) rotate(3deg)';
+        return 'translateX(-16px) rotate(2deg)';
       case 'handhold':
-        return 'translateX(-10px)';
+        return 'translateX(-12px)';
       case 'cuddle':
-        return 'translateX(-16px)';
+        return 'translateX(-20px)';
       case 'lean':
-        return 'translateX(-12px) rotate(-4deg)';
+        return 'translateX(-14px) rotate(-5deg)';
+      case 'cheekkiss':
+        return 'translateX(-16px)';
+      case 'armaround':
+        return 'translateX(-10px) rotate(3deg)';
+      case 'look':
+        return 'translateX(-4px)';
       case 'celebrate':
-        return 'translateY(-4px)';
+        return 'translateY(-6px)';
       default:
         return 'translateX(0)';
     }
@@ -149,7 +174,13 @@ export const CoupleInteraction: React.FC<CoupleInteractionProps> = ({
   };
 
   const isInteracting = activePose !== 'idle' && activePose !== 'celebrate';
-  const showCenterHeart = activePose === 'kiss' || activePose === 'hug' || activePose === 'celebrate';
+  const showCenterHeart = activePose === 'kiss' || activePose === 'hug' || activePose === 'celebrate' || activePose === 'cheekkiss';
+
+  const centerIcon = activePose === 'kiss' ? '💋' : activePose === 'cheekkiss' ? '😊' : '❤️';
+
+  // Billo faces right (toward Pillu), Pillu faces left (toward Billo)
+  const billoDirection: 'left' | 'right' = activePose === 'idle' ? 'right' : 'right';
+  const pilluDirection: 'left' | 'right' = activePose === 'idle' ? 'left' : 'left';
 
   return (
     <div className={`flex flex-col items-center select-none ${className}`}>
@@ -169,7 +200,7 @@ export const CoupleInteraction: React.FC<CoupleInteractionProps> = ({
               animationDelay: `${h.delay}ms`,
             }}
           >
-            💖
+            {h.icon}
           </span>
         ))}
 
@@ -181,10 +212,17 @@ export const CoupleInteraction: React.FC<CoupleInteractionProps> = ({
           <CharacterSprite
             role="billo"
             size={size}
+            direction={billoDirection}
             animation={getBilloAnim()}
-            showHeart={activePose === 'kiss' || activePose === 'celebrate'}
+            showHeart={activePose === 'kiss' || activePose === 'celebrate' || activePose === 'cheekkiss'}
             showNameTag={showNameTag}
-            reaction={activePose === 'kiss' || activePose === 'hug' ? 'blush' : null}
+            reaction={
+              activePose === 'kiss' || activePose === 'hug' || activePose === 'cheekkiss'
+                ? 'blush'
+                : activePose === 'look'
+                ? 'heart'
+                : null
+            }
             dialogueBubble={isInteracting ? null : billoBubble}
           />
         </div>
@@ -197,7 +235,7 @@ export const CoupleInteraction: React.FC<CoupleInteractionProps> = ({
           style={{ width: gap }}
         >
           <span className="text-2xl sm:text-3xl text-rose-500 animate-float-heart drop-shadow-[0_0_12px_rgba(255,0,80,0.8)]">
-            {activePose === 'kiss' ? '💋' : '❤️'}
+            {centerIcon}
           </span>
         </div>
 
@@ -209,10 +247,17 @@ export const CoupleInteraction: React.FC<CoupleInteractionProps> = ({
           <CharacterSprite
             role="pillu"
             size={size}
+            direction={pilluDirection}
             animation={getBilloAnim()}
             showHeart={activePose === 'kiss' || activePose === 'celebrate'}
             showNameTag={showNameTag}
-            reaction={activePose === 'kiss' || activePose === 'hug' ? 'blush' : null}
+            reaction={
+              activePose === 'kiss' || activePose === 'hug' || activePose === 'cheekkiss'
+                ? 'blush'
+                : activePose === 'look'
+                ? 'heart'
+                : null
+            }
             dialogueBubble={isInteracting ? null : pilluBubble}
           />
         </div>
@@ -229,7 +274,7 @@ export const CoupleInteraction: React.FC<CoupleInteractionProps> = ({
 
       {/* Interaction buttons */}
       {showButtons && !forcedPose && (
-        <div className="flex items-center gap-1.5 sm:gap-2 mt-2">
+        <div className="flex flex-wrap items-center justify-center gap-1.5 sm:gap-2 mt-2 max-w-md">
           {POSE_LABELS.map(({ pose: p, icon, label }) => (
             <button
               key={p}
@@ -237,6 +282,7 @@ export const CoupleInteraction: React.FC<CoupleInteractionProps> = ({
               disabled={isInteracting}
               onClick={() => triggerPose(p)}
               title={label}
+              aria-label={label}
               className={`px-2 py-1 pixel-corners border text-[8px] sm:text-[9px] font-bold transition-all flex items-center gap-1 ${
                 isInteracting
                   ? 'opacity-40 cursor-not-allowed bg-black/40 border-gray-700 text-gray-600'
