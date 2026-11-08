@@ -39,13 +39,20 @@ export const Level3HeartRush: React.FC<Level3HeartRushProps> = ({
   const [floatingSpark, setFloatingSpark] = useState<{ text: string; x: number } | null>(null);
 
   const requestRef = useRef<number | null>(null);
+  const basketXRef = useRef(50);
+  const timeLeftRef = useRef(40);
+
+  const updateBasketX = (next: number) => {
+    basketXRef.current = next;
+    setBasketX(next);
+  };
 
   // Mouse move control over arena
   const handleMouseMove = (e: React.MouseEvent<HTMLDivElement>) => {
     if (!gameStarted || gameOver) return;
     const rect = e.currentTarget.getBoundingClientRect();
     const xPercent = ((e.clientX - rect.left) / rect.width) * 100;
-    setBasketX(Math.max(8, Math.min(92, xPercent)));
+    updateBasketX(Math.max(8, Math.min(92, xPercent)));
   };
 
   // Keyboard navigation
@@ -53,9 +60,9 @@ export const Level3HeartRush: React.FC<Level3HeartRushProps> = ({
     if (!gameStarted || gameOver) return;
     const handleKeyDown = (e: KeyboardEvent) => {
       if (e.key === 'ArrowLeft' || e.key === 'a' || e.key === 'A') {
-        setBasketX((prev) => Math.max(8, prev - 8));
+        updateBasketX(Math.max(8, basketXRef.current - 8));
       } else if (e.key === 'ArrowRight' || e.key === 'd' || e.key === 'D') {
-        setBasketX((prev) => Math.min(92, prev + 8));
+        updateBasketX(Math.min(92, basketXRef.current + 8));
       }
     };
     window.addEventListener('keydown', handleKeyDown);
@@ -68,13 +75,14 @@ export const Level3HeartRush: React.FC<Level3HeartRushProps> = ({
 
     const timer = setInterval(() => {
       setTimeLeft((prev) => {
+        const next = prev <= 1 ? 0 : prev - 1;
+        timeLeftRef.current = next;
         if (prev <= 1) {
           clearInterval(timer);
           setGameOver(true);
           sound.playVictory();
-          return 0;
         }
-        return prev - 1;
+        return next;
       });
     }, 1000);
 
@@ -86,10 +94,12 @@ export const Level3HeartRush: React.FC<Level3HeartRushProps> = ({
     if (!gameStarted || gameOver) return;
 
     let nextId = 1;
-    // Increasing spawn rate as time winds down
-    const spawnRate = timeLeft > 20 ? 650 : 450;
 
     const spawnInterval = setInterval(() => {
+      const currentTl = timeLeftRef.current;
+      // Increasing spawn rate as time winds down
+      const spawnRate = currentTl > 20 ? 650 : 450;
+
       const rand = Math.random();
       let type: FallingHeartItem['type'] = 'pink';
       let points = 1;
@@ -111,22 +121,23 @@ export const Level3HeartRush: React.FC<Level3HeartRushProps> = ({
           id: nextId++,
           x: Math.random() * 80 + 10,
           y: 0,
-          speed: Math.random() * 0.9 + 0.8 + (40 - timeLeft) * 0.02,
+          speed: Math.random() * 0.9 + 0.8 + (40 - currentTl) * 0.02,
           type,
           points,
           icon,
         },
       ]);
-    }, spawnRate);
+    }, 650);
 
     const updatePhysics = () => {
+      const currentBasketX = basketXRef.current;
       setItems((prevItems) => {
         const nextItems: FallingHeartItem[] = [];
         for (const item of prevItems) {
           const nextY = item.y + item.speed;
 
-          // Catch collision detection at bottom (80% to 92%)
-          if (nextY >= 78 && nextY <= 90 && Math.abs(item.x - basketX) < 11) {
+          // Catch collision detection at bottom (78% to 90%)
+          if (nextY >= 78 && nextY <= 90 && Math.abs(item.x - currentBasketX) < 11) {
             // Caught heart!
             sound.playHeartPickup();
             setCombo((c) => {
@@ -137,7 +148,7 @@ export const Level3HeartRush: React.FC<Level3HeartRushProps> = ({
               setScore((s) => s + earned);
               setFloatingSpark({
                 text: `+${earned}${multiplier > 1 ? ` (x${multiplier})` : ''}`,
-                x: basketX,
+                x: currentBasketX,
               });
               setTimeout(() => setFloatingSpark(null), 600);
               return nextC;
@@ -160,7 +171,7 @@ export const Level3HeartRush: React.FC<Level3HeartRushProps> = ({
       clearInterval(spawnInterval);
       if (requestRef.current) cancelAnimationFrame(requestRef.current);
     };
-  }, [gameStarted, gameOver, basketX, timeLeft]);
+  }, [gameStarted, gameOver]);
 
   const handleFinishLevel = () => {
     // Award 1 heart per 10 points scored
@@ -307,7 +318,9 @@ export const Level3HeartRush: React.FC<Level3HeartRushProps> = ({
                 onClick={() => {
                   setScore(0);
                   setCombo(0);
+                  setMaxCombo(0);
                   setTimeLeft(40);
+                  timeLeftRef.current = 40;
                   setItems([]);
                   setGameOver(false);
                 }}

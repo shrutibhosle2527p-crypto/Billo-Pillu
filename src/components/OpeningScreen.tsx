@@ -29,9 +29,9 @@ export const OpeningScreen: React.FC<OpeningScreenProps> = ({
       {/* Floating Heart Particles */}
       <div className="absolute inset-0 pointer-events-none overflow-hidden">
         <span className="absolute top-4 left-8 text-2xl animate-float-heart">💖</span>
-        <span className="absolute top-12 right-12 text-3xl animate-float-heart delay-300">💕</span>
-        <span className="absolute bottom-20 left-16 text-xl animate-float-heart delay-700">✨</span>
-        <span className="absolute bottom-28 right-24 text-2xl animate-float-heart delay-500">💛</span>
+        <span className="absolute top-12 right-12 text-3xl animate-float-heart" style={{ animationDelay: '300ms' }}>💕</span>
+        <span className="absolute bottom-20 left-16 text-xl animate-float-heart" style={{ animationDelay: '700ms' }}>✨</span>
+        <span className="absolute bottom-28 right-24 text-2xl animate-float-heart" style={{ animationDelay: '500ms' }}>💛</span>
       </div>
 
       {/* Top Banner Tagline */}

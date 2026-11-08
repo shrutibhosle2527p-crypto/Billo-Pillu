@@ -153,6 +153,7 @@ export const GameHUD: React.FC<GameHUDProps> = ({
         <button
           onClick={toggleMusic}
           title={musicOn ? 'Mute Chiptune Music' : 'Play Chiptune Music'}
+          aria-label={musicOn ? 'Mute Chiptune Music' : 'Play Chiptune Music'}
           className={`px-1.5 py-0.5 sm:py-1 text-[8px] pixel-corners border cursor-pointer ${
             musicOn
               ? 'bg-yellow-500 text-black border-yellow-300 font-bold'
@@ -166,6 +167,7 @@ export const GameHUD: React.FC<GameHUDProps> = ({
         <button
           onClick={toggleSfx}
           title={sfxOn ? 'Mute SFX' : 'Enable SFX'}
+          aria-label={sfxOn ? 'Mute SFX' : 'Enable SFX'}
           className={`px-1.5 py-0.5 sm:py-1 text-[8px] pixel-corners border cursor-pointer ${
             sfxOn
               ? 'bg-pink-800 text-white border-pink-500'
@@ -179,6 +181,7 @@ export const GameHUD: React.FC<GameHUDProps> = ({
         <button
           onClick={toggleFullscreen}
           title="Toggle Fullscreen"
+          aria-label="Toggle Fullscreen"
           className="px-1.5 py-0.5 sm:py-1 bg-black/50 hover:bg-pink-950 text-pink-300 border border-pink-800 text-[8px] pixel-corners cursor-pointer"
         >
           {isFullscreen ? '⛶' : '⛶'}
@@ -192,6 +195,7 @@ export const GameHUD: React.FC<GameHUDProps> = ({
             }
           }}
           title="Restart Quest from Level 1"
+          aria-label="Restart Quest from Level 1"
           className="text-[8px] text-pink-400/60 hover:text-pink-300 p-0.5 cursor-pointer"
         >
           ↺

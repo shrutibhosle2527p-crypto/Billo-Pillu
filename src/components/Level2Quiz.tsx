@@ -174,7 +174,9 @@ export const Level2Quiz: React.FC<Level2QuizProps> = ({
             <div className="relative z-10 mt-2 bg-[#150524]/95 p-2.5 sm:p-3 pixel-border border-yellow-400 flex flex-col sm:flex-row items-center justify-between gap-2 shadow-xl animate-fade-in">
               <div className="flex-1 font-retro text-lg sm:text-xl text-pink-200">
                 <p className="text-yellow-300 font-bold mb-0.5">
-                  {selectedOption === question.correctIndex ? '💖 Correct! +2 Hearts Awarded!' : '💕 Close enough! We love each other anyway!'}
+                  {selectedOption === question.correctIndex
+                    ? `💖 Correct! +${isSpeedRound ? 3 : 2} Hearts Awarded!`
+                    : '💕 Close enough! We love each other anyway!'}
                 </p>
                 <p>{question.partnerReaction}</p>
               </div>

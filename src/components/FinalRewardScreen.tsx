@@ -47,9 +47,9 @@ export const FinalRewardScreen: React.FC<FinalRewardScreenProps> = ({
       {/* Floating Celebration Particles */}
       <div className="absolute inset-0 pointer-events-none overflow-hidden">
         <div className="absolute top-4 left-8 text-2xl animate-float-heart">🎆</div>
-        <div className="absolute top-8 right-12 text-2xl animate-float-heart delay-300">🎇</div>
-        <div className="absolute top-16 left-1/3 text-xl animate-float-heart delay-150">💖</div>
-        <div className="absolute top-20 right-1/4 text-xl animate-float-heart delay-500">✨</div>
+        <div className="absolute top-8 right-12 text-2xl animate-float-heart" style={{ animationDelay: '300ms' }}>🎇</div>
+        <div className="absolute top-16 left-1/3 text-xl animate-float-heart" style={{ animationDelay: '150ms' }}>💖</div>
+        <div className="absolute top-20 right-1/4 text-xl animate-float-heart" style={{ animationDelay: '500ms' }}>✨</div>
       </div>
 
       {/* Top Header Bar */}

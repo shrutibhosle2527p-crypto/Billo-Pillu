@@ -186,7 +186,7 @@ export const Level4TreasureHunt: React.FC<Level4TreasureHuntProps> = ({
           </span>
         </div>
 
-        {/* Complete Level 4 Button when all 5 found */}
+        {/* Complete Level 4 Button when all chests opened */}
         {allChestsOpened && !activeChest && (
           <div className="absolute top-2.5 right-2.5 z-30 animate-pulse">
             <button
@@ -201,7 +201,7 @@ export const Level4TreasureHunt: React.FC<Level4TreasureHuntProps> = ({
           </div>
         )}
 
-        {/* 5 Hidden Chests Placed Along Grassy Ground Path */}
+        {/* Memory Chests Placed Along Grassy Ground Path */}
         {chests.map((chest) => {
           const isOpen = openedChestIds.includes(chest.id);
           const isNearby = Math.abs(chest.x - playerX) < 8;

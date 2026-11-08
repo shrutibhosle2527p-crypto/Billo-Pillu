@@ -8,7 +8,7 @@ import { Level4TreasureHunt } from './components/Level4TreasureHunt';
 import { Level5FinalQuest } from './components/Level5FinalQuest';
 import { LoveLetter } from './components/LoveLetter';
 import { OpeningScreen } from './components/OpeningScreen';
-import { GameLevelId, GameSaveState } from './types';
+import { GameLevelId, GameSaveState, HeartMilestoneTier } from './types';
 import { sound } from './utils/audio';
 import {
   getMilestoneTier,
@@ -28,9 +28,9 @@ export const App: React.FC = () => {
   }, [gameState]);
 
   // Check milestones when hearts increase
-  const checkMilestone = (hearts: number) => {
+  const checkMilestone = (hearts: number, achievedMilestones: HeartMilestoneTier[]) => {
     const tierInfo = getMilestoneTier(hearts);
-    if (tierInfo.tier !== 'NONE' && !gameState.achievedMilestones.includes(tierInfo.tier)) {
+    if (tierInfo.tier !== 'NONE' && !achievedMilestones.includes(tierInfo.tier)) {
       sound.playFanfare();
       setGameState((prev) => ({
         ...prev,
@@ -47,7 +47,7 @@ export const App: React.FC = () => {
   const handleAddHearts = (amount: number) => {
     setGameState((prev) => {
       const nextHearts = prev.totalHearts + amount;
-      checkMilestone(nextHearts);
+      checkMilestone(nextHearts, prev.achievedMilestones);
       return {
         ...prev,
         totalHearts: nextHearts,
@@ -73,7 +73,7 @@ export const App: React.FC = () => {
       if (prev.level1HeartsFound.includes(heartId)) return prev;
       const nextHearts = [...prev.level1HeartsFound, heartId];
       const newTotal = prev.totalHearts + 1;
-      checkMilestone(newTotal);
+      checkMilestone(newTotal, prev.achievedMilestones);
       return {
         ...prev,
         level1HeartsFound: nextHearts,
@@ -113,7 +113,7 @@ export const App: React.FC = () => {
       if (prev.level4ChestsOpened.includes(chestId)) return prev;
       const nextChests = [...prev.level4ChestsOpened, chestId];
       const nextTotal = prev.totalHearts + hearts;
-      checkMilestone(nextTotal);
+      checkMilestone(nextTotal, prev.achievedMilestones);
       return {
         ...prev,
         level4ChestsOpened: nextChests,
